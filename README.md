@@ -8,8 +8,8 @@
 
 
 <p align="center">
-  <b> Um projeto fullstack de uma rede social completa e funcional </b></br>
-  <sub> Este projeto tem o objetivo de pôr todas minhas habilidades à prova, o projeto foi desenvolvido do "zero", uma grade parte do projeto usei código de terceiros como bibliotecas e tecnologias, no entanto todo o código que foi escrito, foi totalmente desenvolvido por mim.
+  <b> Back-end do projet rede social completa </b></br>
+  <sub> Api desenvolvida para atender as demandas do projeto "Social"
   <sub>
 </p>
 
