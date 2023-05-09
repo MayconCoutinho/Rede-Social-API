@@ -8,7 +8,7 @@
 
 
 <p align="center">
-  <b> Back-end do projet rede social completa </b></br>
+  <b> Back-end  </b></br>
   <sub> Api desenvolvida para atender as demandas do projeto "Social"
   <sub>
 </p>
