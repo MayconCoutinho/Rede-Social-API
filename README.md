@@ -1,3 +1,9 @@
+<br /> 
+
+### 🚧 PROJETO EM ANDAMENTO 🚧
+
+<br /> 
+
 <p align="center">
   <img src="https://user-images.githubusercontent.com/60453269/216188774-9349330a-7e20-4039-ad76-ece09f24096d.png" alt="Logo" width="150" height="150" />
 </p>
@@ -22,9 +28,7 @@
   <a href="#Ideias">💡 Possíveis Melhorias </a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
   <a href="#Creditos"> 🏆 Créditos </a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 </p>
-<br /> 
 
-### 🚧 PROJETO EM ANDAMENTO 🚧
 
 <br /> 
 
