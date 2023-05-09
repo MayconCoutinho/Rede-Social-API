@@ -9,7 +9,7 @@
 
 <p align="center">
   <b> Back-end  </b></br>
-  <sub> Api desenvolvida para atender as demandas do projeto "Social"
+  <sub> Api desenvolvida para atender as demandas do projeto "Rede Social"
   <sub>
 </p>
 
