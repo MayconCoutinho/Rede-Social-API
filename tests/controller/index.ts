@@ -1,6 +1,0 @@
-export * from "./add-survey-controller"
-export * from "./load-survey-result-controller"
-export * from "../presentation/controllers/load-surveys-controller"
-export * from "../presentation/controllers/login-controller"
-export * from "../presentation/controllers/save-survey-result-controller"
-export * from "../presentation/controllers/signup-controller"
