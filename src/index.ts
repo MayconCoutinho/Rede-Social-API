@@ -1,24 +1,13 @@
-import express, { NextFunction, Request, Response } from "express"
-import pingRouter from "./routes/ping.routes"
-import { ParamsError } from "./errors/ParamsError"
+import cors from "cors"
+import express from "express"
+// import { postsRouter } from './router/postsRouter'
+import { usersRouter } from "./routes/user.routes"
 
 const app = express()
-app.use(pingRouter)
-
-app.use((err: ParamsError, request: Request, response: Response, _next: NextFunction) => {
-	if (err instanceof ParamsError) {
-		return response.status(err.statusCode).json({
-			status: "error",
-			message: err.message,
-		})
-	}
-
-	console.error(err)
-
-	return response.status(500).json({
-		status: "error",
-		message: "Internal server error",
-	})
+app.use(express.json())
+app.use(cors())
+app.listen(3003, () => {
+	console.log(`Servidor rodando na porta ${3003}`)
 })
-
-export { app }
+app.use("/user", usersRouter)
+// app.use("/posts", postsRouter)

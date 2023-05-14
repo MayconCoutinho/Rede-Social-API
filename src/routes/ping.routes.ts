@@ -1,6 +1,6 @@
 import { Router } from "express"
-import { PingBusiness } from "../business/PingBusiness"
-import { PingController } from "../controller/pingController"
+import { PingBusiness } from "../business/ping"
+import { PingController } from "../controller/ping"
 
 export const pingRouter = Router()
 

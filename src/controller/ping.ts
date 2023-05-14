@@ -1,5 +1,5 @@
 import { Request, Response } from "express"
-import { PingBusiness } from "../business/PingBusiness"
+import { PingBusiness } from "../business/ping"
 import { BaseError } from "../errors/BaseError"
 
 export class PingController {

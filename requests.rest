@@ -1,3 +1,30 @@
 ### Ping
 GET http://localhost:3003/ping
 
+
+### Signup
+POST http://localhost:3003/user/register
+Content-Type: application/json
+
+{
+    "name": "Zane",
+    "email": "teste270@gmail.com",
+    "password": "123456"
+}
+
+### Login
+POST http://localhost:3003/users/login
+Content-Type: application/json
+
+{
+    "email": "Toshinori@gmail.com",
+    "password": "123456"
+}
+
+### teste
+POST http://localhost:3003/teste
+Content-Type: application/json
+
+{
+    "name": "Zane",
+}
