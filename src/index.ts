@@ -1,6 +1,6 @@
 import express, { NextFunction, Request, Response } from "express"
 import pingRouter from "./routes/ping.routes"
-import { ParamsError } from "./error/ParamsError"
+import { ParamsError } from "./errors/ParamsError"
 
 const app = express()
 
