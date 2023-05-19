@@ -38,7 +38,8 @@ export class UsersController {
 				password: req.body.password,
 			}
 			const response = await this.usersBusiness.signup(input)
-			res.status(201).send(response)
+
+			res.status(200).send(response)
 		} catch (error) {
 			console.log(error)
 			if (error instanceof BaseError) {

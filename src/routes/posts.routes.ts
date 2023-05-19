@@ -24,3 +24,5 @@ const postsController = new PostsController(
 )
 postsRouter.get("/", postsController.getPostsController)
 postsRouter.post("/", Multer.single("img"), UploadImage, postsController.postPostsController)
+
+export default postsRouter

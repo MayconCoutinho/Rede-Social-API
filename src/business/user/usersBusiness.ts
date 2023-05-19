@@ -16,6 +16,7 @@ import { Authenticator, AuthenticatorData } from "../../services/Authenticator"
 import { HashManager } from "../../services/HashManager"
 import { IdGenerator } from "../../services/IdGenerator"
 import { RGBGenerator } from "../../services/RGBGenarator"
+import { CheckingUserData } from "../../services/CheckingUserData"
 
 export class UsersBusiness {
 	constructor(
@@ -24,7 +25,8 @@ export class UsersBusiness {
 		private idGenerator: IdGenerator,
 		private hashManager: HashManager,
 		private authenticator: Authenticator,
-		private postsDataBase: PostsDataBase
+		private postsDataBase: PostsDataBase,
+		private checkingUserData: CheckingUserData
 	) {}
 
 	public getPerfilUserBussines = async (idUser: string | undefined) => {
@@ -45,42 +47,23 @@ export class UsersBusiness {
 	public signup = async (input: ISignupInputDTO): Promise<ISignupOutputDTO> => {
 		const { name, email, password } = input
 
-		if (typeof name !== "string") {
-			throw new ParamsError("Parâmetro 'name' inválido: deve ser uma string")
-		}
-		if (typeof email !== "string") {
-			throw new ParamsError("Parâmetro 'email' inválido: deve ser uma string")
-		}
-		if (typeof password !== "string") {
-			throw new ParamsError("Parâmetro 'password' inválido: deve ser uma string")
-		}
-		if (name.length < 3) {
-			throw new ParamsError("Parâmetro 'name' inválido: mínimo de 3 caracteres")
-		}
-		if (password.length < 6) {
-			throw new ParamsError("Parâmetro 'password' inválido: mínimo de 6 caracteres")
-		}
-		if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-			throw new ParamsError("Parâmetro 'email' inválido")
-		}
-		const isEmailAlreadyExists = await this.usersDataBase.findByEmail(email)
+		this.checkingUserData.CheckingSignup(name, email, password)
 
-		if (isEmailAlreadyExists) {
-			throw new ConflictError("Email já cadastrado")
-		}
-		const id = this.idGenerator.generate()
 		const hashedPassword = await this.hashManager.hash(password)
+        
 		const rgb: any = this.rgbGenerator.generateRGB()
 		const imgPerfil = null
 		const friends = null
 		const postUser = null
 
-		const user = new User(id, name, email, hashedPassword, rgb, imgPerfil, friends, postUser)
+		const user = new User(name, email, hashedPassword, rgb, imgPerfil, friends, postUser)
+
 		await this.usersDataBase.createUser(user)
 
-		const payload: AuthenticatorData = {
-			id: user.getId(),
-		}
+		const id = this.idGenerator.generate()
+
+		const payload: AuthenticatorData = { id }
+
 		const token = this.authenticator.generateToken(payload)
 
 		const response: ISignupOutputDTO = {
@@ -93,25 +76,12 @@ export class UsersBusiness {
 	public login = async (input: ILoginInputDTO): Promise<ILoginOutputDTO> => {
 		const { email, password } = input
 
-		if (typeof email !== "string") {
-			throw new ParamsError("Parâmetro 'email' inválido")
-		}
-		if (typeof password !== "string") {
-			throw new ParamsError("Parâmetro 'password' inválido")
-		}
-		if (password.length < 6) {
-			throw new ParamsError("Parâmetro 'password' inválido: mínimo de 6 caracteres")
-		}
-		if (!email.match(/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g)) {
-			throw new ParamsError("Parâmetro 'email' inválido")
-		}
+		this.checkingUserData.CheckingLogin(email, password)
+
+		// Essa função é do firebase e pega nos bancos de dado
 		const userDB = await this.usersDataBase.findByEmailLogin(email)
 
-		if (!userDB) {
-			throw new NotFoundError("Email não cadastrado")
-		}
 		const user = new User(
-			userDB.id,
 			userDB.name,
 			userDB.email,
 			userDB.password,
@@ -124,9 +94,11 @@ export class UsersBusiness {
 		if (!isPasswordCorrect) {
 			throw new AuthenticationError("Password incorreto")
 		}
-		const payload: AuthenticatorData = {
-			id: user.getId(),
-		}
+
+		const id = this.idGenerator.generate()
+
+		const payload: AuthenticatorData = { id }
+
 		const token = this.authenticator.generateToken(payload)
 
 		const response: ILoginOutputDTO = {

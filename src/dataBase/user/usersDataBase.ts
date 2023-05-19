@@ -1,11 +1,11 @@
 import { collection, doc, getDocs, setDoc } from "firebase/firestore"
 import { IUserDB, User } from "../../models/User"
 import { FirebaseConfigChave } from "../firebase"
+import { PrismaClient } from "@prisma/client"
 
 export class UsersDataBase {
 	public toUserDBModel = (user: User): IUserDB => {
 		return {
-			id: user.getId(),
 			name: user.getName(),
 			email: user.getEmail(),
 			password: user.getPassword(),
@@ -14,6 +14,24 @@ export class UsersDataBase {
 			friends: user.getFriends(),
 			postUser: user.getPostUser(),
 		}
+	}
+	public createUser = async (user: any) => {
+		const { email, name, imgPerfil, rgb, password } = this.toUserDBModel(user)
+
+		const prisma = new PrismaClient()
+
+		await prisma.userPublic.create({
+			data: {
+				email,
+				name,
+				imgPerfil: "imagem",
+				rgb: `${rgb}`,
+				password,
+			},
+		})
+
+		// const db = FirebaseConfigChave()
+		// setDoc(doc(db, "usuarios", userDB.id), userDB)
 	}
 	public getAllUsersDataBase = async () => {
 		try {
@@ -96,10 +114,5 @@ export class UsersDataBase {
 			return undefined
 		})
 		return checkingAll[0]
-	}
-	public createUser = async (user: any) => {
-		const userDB = this.toUserDBModel(user)
-		const db = FirebaseConfigChave()
-		setDoc(doc(db, "usuarios", userDB.id), userDB)
 	}
 }

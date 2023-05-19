@@ -12,15 +12,3 @@ describe("GET /ping", () => {
 		expect(response.body.message).toEqual("Pong!")
 	})
 })
-
-describe("POST /user/...", () => {
-	it("should post database of user", async () => {
-		const response: any = await request(app).post("/user/create").send({
-			user: "Maycon",
-			email: "mayconteste@gmail.com",
-			passaword: "123456",
-		})
-		// expect(response).toBe(201)
-		// expect(response.body).toHaveProperty("user")
-	})
-})
