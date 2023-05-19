@@ -1,3 +1,51 @@
 ### Ping
 GET http://localhost:3003/ping
 
+
+
+### PerfilUser
+GET http://localhost:3003/users/perfil
+Content-Type: application/json
+Authorization: Bearer ACCESS-TOKEN
+
+{
+  "authorization" : "aa670248-dbd3-402c-a824-c52646fc1196"
+}
+
+### Pegar todos os Posts
+GET http://localhost:3003/posts
+Content-Type: application/json
+Authorization: Bearer ACCESS-TOKEN
+
+{
+     "authorization" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImFhNjcwMjQ4LWRiZDMtNDAyYy1hODI0LWM1MjY0NmZjMTE5NiIsImlhdCI6MTY3Njc1MDMzMX0.a6yNFdYtoxbkpbWt1LxBIIjFS3w_HOwqwZKtP05zVKQ"
+}
+
+### Post Feed
+POST http://localhost:3003/posts
+Content-Type: application/json
+
+{
+    "idUser": "f27d54fd-2edb-4653-af60-bb311a00a5b3",
+    "texto": "olha eu kkkkk",
+    "img": "https://i0.wp.com/www.biotadofuturo.com.br/wp-content/uploads/2015/01/Dan-Mihai.jpg?fit=1024%2C683&ssl=1"
+}
+
+### Signup
+POST http://localhost:3003/users/register
+Content-Type: application/json
+
+{
+    "name": "serto",
+    "email": "serto@gmail.com",
+    "password": "123456"
+}
+
+### Login
+POST http://localhost:3003/users/login
+Content-Type: application/json
+
+{
+    "email": "Toshinori@gmail.com",
+    "password": "123456"
+}

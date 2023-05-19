@@ -1,5 +1,8 @@
 import { app } from "."
+import dotenv from "dotenv"
 
-app.listen(3003, () => {
-	console.log("Servidor rodando na porta 3003 🚀")
+dotenv.config()
+
+app.listen(process.env.PORTA || 3003, () => {
+	console.log(`Servidor rodando na porta ${process.env.PORTA || 3003} 🚀`)
 })
