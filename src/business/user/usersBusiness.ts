@@ -85,10 +85,10 @@ export class UsersBusiness {
 			}
 			return response
 		}
-		const Error: ILoginOutputDTO = {
+		const Error2: ILoginOutputDTO = {
 			message: "Login problema com Login",
-			token: false,
+			token: "false",
 		}
-		return Error
+		return Error2
 	}
 }

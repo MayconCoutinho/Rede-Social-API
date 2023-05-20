@@ -59,7 +59,7 @@ export class CheckingUserData {
 		return true
 	}
 
-	public CheckiIsEmailAlreadyExists = async (email: string) => {
+	public CheckiIsEmailAlreadyExists = async (email: string): Promise<boolean> => {
 		const prisma = new PrismaClient()
 
 		const IsEmail = await prisma.userPublic.findFirst({
@@ -83,10 +83,15 @@ export class CheckingUserData {
 		return !!IsEmail
 	}
 	public CheckingSignup = async (name: string, email: string, password: string) => {
-		this.CheckiIsEmailAlreadyExists(email)
 		this.CheckinName(name)
 		this.CheckinEmail(email)
 		this.CheckiPassword(password)
+
+		const result = await this.CheckiIsEmailAlreadyExists(email)
+
+		if (result) {
+			throw new ParamsError("O email já existe!")
+		}
 	}
 	public CheckingLogin = async (email: string, password: string): Promise<string | false> => {
 		const IsLogin = await this.GetInfoUser(email, password)

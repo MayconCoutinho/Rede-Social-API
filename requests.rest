@@ -36,7 +36,7 @@ POST http://localhost:3003/users/register
 Content-Type: application/json
 
 {
-    "name": "Toshinori",
+    "name": "Toshinoris",
     "email": "Toshinori@gmail.com",
     "password": "123456"
 }
