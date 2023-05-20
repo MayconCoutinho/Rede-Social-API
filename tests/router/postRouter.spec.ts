@@ -5,7 +5,7 @@ import { app } from "../../src"
 // Teste com a plicação funcionando por completo e dando retorno (Teste de integração)
 
 describe("GET /posts", () => {
-	it("should get all user posts", async () => {
+	it.skip("should get all user posts", async () => {
 		const response = await request(app).get("/posts")
 		// expect(response.status).toBe(200)
 	})

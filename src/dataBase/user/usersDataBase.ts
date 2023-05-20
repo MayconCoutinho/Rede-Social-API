@@ -47,6 +47,10 @@ export class UsersDataBase {
 					return item
 				})
 			return result
+
+            const prisma = new PrismaClient()
+
+
 		} catch (error: any) {
 			console.log(error.response)
 		}
@@ -90,7 +94,9 @@ export class UsersDataBase {
 		return checkingAllEmail[0]
 	}
 	public findByEmailLogin = async (email: string): Promise<any> => {
+
 		const getUserfindByEmail = await this.getAllUsersDataBase()
+
 		const mapEmail: void[] | undefined = getUserfindByEmail?.map((item) => {
 			return item
 		})
