@@ -75,5 +75,5 @@ export interface ILoginInputDTO {
 }
 export interface ILoginOutputDTO {
 	message: string
-	token: string
+	token: string | false
 }

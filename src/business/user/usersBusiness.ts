@@ -50,7 +50,7 @@ export class UsersBusiness {
 		this.checkingUserData.CheckingSignup(name, email, password)
 
 		const hashedPassword = await this.hashManager.hash(password)
-        
+
 		const rgb: any = this.rgbGenerator.generateRGB()
 		const imgPerfil = null
 		const friends = null
@@ -76,35 +76,19 @@ export class UsersBusiness {
 	public login = async (input: ILoginInputDTO): Promise<ILoginOutputDTO> => {
 		const { email, password } = input
 
-		this.checkingUserData.CheckingLogin(email, password)
+		const isToken = await this.checkingUserData.CheckingLogin(email, password)
 
-		// Essa função é do firebase e pega nos bancos de dado
-		const userDB = await this.usersDataBase.findByEmailLogin(email)
-
-		const user = new User(
-			userDB.name,
-			userDB.email,
-			userDB.password,
-			userDB.rgb,
-			userDB.imgPerfil,
-			userDB.friends,
-			userDB.postUser
-		)
-		const isPasswordCorrect = await this.hashManager.compare(password, user.getPassword())
-		if (!isPasswordCorrect) {
-			throw new AuthenticationError("Password incorreto")
+		if (isToken) {
+			const response: ILoginOutputDTO = {
+				message: "Login realizado com sucesso",
+				token: isToken,
+			}
+			return response
 		}
-
-		const id = this.idGenerator.generate()
-
-		const payload: AuthenticatorData = { id }
-
-		const token = this.authenticator.generateToken(payload)
-
-		const response: ILoginOutputDTO = {
-			message: "Login realizado com sucesso",
-			token,
+		const Error: ILoginOutputDTO = {
+			message: "Login problema com Login",
+			token: false,
 		}
-		return response
+		return Error
 	}
 }
