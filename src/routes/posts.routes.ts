@@ -15,12 +15,7 @@ const Multer = multer({
 })
 
 const postsController = new PostsController(
-	new PostsBusiness(
-		new PostsDataBase(),
-		new Authenticator(),
-		new IdGenerator(),
-		new UsersDataBase()
-	)
+	new PostsBusiness(new PostsDataBase(), new Authenticator(), new UsersDataBase())
 )
 postsRouter.get("/", postsController.getPostsController)
 postsRouter.post("/", Multer.single("img"), UploadImage, postsController.postPostsController)

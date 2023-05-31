@@ -25,3 +25,17 @@ model userPublic {
 
     @@map("usuarios")
 }
+
+model feed {
+    id         String  @id @default(uuid())
+    date       String
+    idUser     String
+    idUserLike Boolean
+    img        String
+    imgPerfil  String
+    name       String
+    rgb        String
+    texto      String
+
+    @@map("feed")
+}

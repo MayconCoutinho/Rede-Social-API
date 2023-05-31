@@ -5,7 +5,6 @@ import { FirebaseConfigChave } from "../firebase"
 export class PostsDataBase {
 	public toPostDBModel = (user: Post): IpostDB => {
 		const postUser: IpostDB = {
-			id: user.getId(),
 			idUser: user.getIdUser(),
 			name: user.getName(),
 			imgPerfil: user.getImgPerfil(),
@@ -59,6 +58,6 @@ export class PostsDataBase {
 	public createPost = async (post: any) => {
 		const postDB = this.toPostDBModel(post)
 		const db = FirebaseConfigChave()
-		setDoc(doc(db, "Feed", postDB.id), postDB)
+		// setDoc(doc(db, "Feed", postDB.id), postDB)
 	}
 }

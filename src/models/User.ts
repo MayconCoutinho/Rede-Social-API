@@ -7,6 +7,14 @@ export interface IUserDB {
 	friends: [] | null
 	postUser: [] | null
 }
+export interface UserToken {
+	token: string | string[] | undefined
+}
+export interface UserLoading {
+	name: string
+	rgb: string
+	imgPerfil: string | null
+}
 export class User {
 	constructor(
 		private name: string,
