@@ -1,22 +1,20 @@
 import { UsersDataBase } from "../../dataBase/user/usersDataBase"
-import { PostsDataBase } from "../../dataBase/posts/postsDataBase"
-import { AuthenticationError } from "../../errors/AuthenticationError"
-import { ConflictError } from "../../errors/ConflictError"
-import { HeadersError } from "../../errors/HeaderError"
-import { NotFoundError } from "../../errors/NotFoundError"
-import { ParamsError } from "../../errors/ParamsError"
 import {
 	ILoginInputDTO,
 	ILoginOutputDTO,
 	ISignupInputDTO,
 	ISignupOutputDTO,
 	User,
+	UserLoading,
+	UserToken,
 } from "../../models/User"
 import { Authenticator, AuthenticatorData } from "../../services/Authenticator"
 import { HashManager } from "../../services/HashManager"
 import { IdGenerator } from "../../services/IdGenerator"
 import { RGBGenerator } from "../../services/RGBGenarator"
 import { CheckingUserData } from "../../services/CheckingUserData"
+import { GetInfoUser } from "../../services/GetInfoUser"
+import { ParamsError } from "../../errors/ParamsError"
 
 export class UsersBusiness {
 	constructor(
@@ -25,29 +23,14 @@ export class UsersBusiness {
 		private idGenerator: IdGenerator,
 		private hashManager: HashManager,
 		private authenticator: Authenticator,
-		private postsDataBase: PostsDataBase,
-		private checkingUserData: CheckingUserData
+		private checkingUserData: CheckingUserData,
+		private getInfoUser: GetInfoUser
 	) {}
 
-	public getPerfilUserBussines = async (idUser: string | undefined) => {
-		if (!idUser) {
-			throw new HeadersError()
-		}
-
-		const Allpost = await this.postsDataBase.getAllPostsDataBase()
-
-		const postUser = Allpost?.filter((item) => {
-			return item?.idUser === idUser
-		})
-
-		const response = await this.usersDataBase.getPerfilUserDataBase(idUser, postUser)
-
-		return response
-	}
 	public signup = async (input: ISignupInputDTO): Promise<ISignupOutputDTO> => {
 		const { name, email, password } = input
 
-		this.checkingUserData.CheckingSignup(name, email, password)
+		await this.checkingUserData.CheckingSignup(name, email, password)
 
 		const hashedPassword = await this.hashManager.hash(password)
 
@@ -85,10 +68,25 @@ export class UsersBusiness {
 			}
 			return response
 		}
-		const Error2: ILoginOutputDTO = {
-			message: "Login problema com Login",
+		const error: ILoginOutputDTO = {
+			message: "Confira ",
 			token: "false",
 		}
-		return Error2
+		return error
+	}
+	public info = async (input: UserToken): Promise<UserLoading | void> => {
+		const { token } = input
+
+		if (!token) {
+			throw new ParamsError("Não existe um token")
+		}
+		if (typeof token === "string") {
+			const response = await this.getInfoUser.InfoUser(token)
+
+			if (!response) {
+				throw new ParamsError("Deu algo de errado")
+			}
+			return response
+		}
 	}
 }

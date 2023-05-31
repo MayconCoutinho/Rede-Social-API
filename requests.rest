@@ -1,8 +1,6 @@
 ### Ping
 GET http://localhost:3003/ping
 
-
-
 ### PerfilUser
 GET http://localhost:3003/users/perfil
 Content-Type: application/json
